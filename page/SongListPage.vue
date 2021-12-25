@@ -6,7 +6,12 @@
         enter-active-class="animate__fadeInRight"
         leave-active-class="animate__fadeOutRight"
       >
-        <div class="listPageItem" v-for="item in playListMusic" :key="item.id">
+        <div
+          class="listPageItem"
+          v-for="item in playListMusic"
+          :key="item.id"
+          @click="toPlayer(playListMusic, item.id)"
+        >
           <img
             v-lazy="item.al.picUrl"
             alt="歌单音乐图片"
@@ -38,6 +43,23 @@ export default {
         id: this.$route.query.id,
       });
       this.playListMusic = musicMess.playlist.tracks;
+    },
+    // 跳转播放器界面
+    toPlayer(obj, mid) {
+      let musicIds = [];
+      for (let i = 0; i < obj.length; i++) {
+        musicIds.push(obj[i].id);
+      }
+
+      // 将音乐列表本地存储
+      localStorage.setItem("musicIds", JSON.stringify(musicIds));
+
+      this.$router.push({
+        path: "/player",
+        query: {
+          id: mid,
+        },
+      });
     },
   },
   mounted() {

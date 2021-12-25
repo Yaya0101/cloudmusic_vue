@@ -39,13 +39,14 @@
         @click="playMusic"
       ></div>
       <div class="iconfont icon-xiayishou xiayi" @click="toXiaMusic"></div>
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCommand">
         <span class="iconfont icon-danlieliebiao liebiao"> </span>
         <el-dropdown-menu slot="dropdown" class="lieOut">
           <el-dropdown-item
             v-for="item in musicListMess"
             :key="item.id"
             :disabled="item.id === Number(musicId)"
+            :command="item.id"
             >{{ item.name }}</el-dropdown-item
           >
         </el-dropdown-menu>
@@ -92,6 +93,13 @@ export default {
       let musciUrl = await myAxios("/song/url", {
         id: this.$route.query.id,
       });
+      if (musciUrl.data[0].url === null) {
+        this.$notify({
+          title: musciMess.songs[0].name,
+          message: "音乐资源丢失,默认继续播放上一首音乐",
+          duration: 0,
+        });
+      }
 
       let musciLrc = await myAxios("/lyric", {
         id: this.$route.query.id,
@@ -164,7 +172,35 @@ export default {
 
       // 是否播放完毕
       if (bfq.ended) {
+        // 重置
         (this.currentTime = "00:00"), (this.isPlay = false), (this.tdValue = 0);
+        // 随机或顺序播放
+        if (this.isSuiJi) {
+          this.musicIndex = parseInt(Math.random() * this.musicListMess.length);
+          let id = this.musicListMess[this.musicIndex].id;
+
+          this.$router.replace({
+            path: "/player",
+            query: {
+              id: id,
+            },
+          });
+          this.getMusicMess();
+        } else {
+          if (this.musicIndex === this.musicListMess.length - 1) {
+            this.musicIndex = 0;
+          } else {
+            this.musicIndex = this.musicIndex + 1;
+          }
+          let id = this.musicListMess[this.musicIndex].id;
+          this.$router.replace({
+            path: "/player",
+            query: {
+              id: id,
+            },
+          });
+          this.getMusicMess();
+        }
       }
     },
 
@@ -211,12 +247,21 @@ export default {
       } else {
         this.musicIndex = this.musicIndex + 1;
       }
-      this.$route.query.id = Number(this.musicListMess[this.musicIndex].id);
+      let mid = Number(this.musicListMess[this.musicIndex].id);
 
       let bfq = this.$refs.bfq;
-      bfq.load();
+      bfq.currentTime = 0
+      bfq.pause()
       this.isPlay = false;
       this.tdValue = 0;
+
+      this.$router.replace({
+        path: "/player",
+        query: {
+          id: mid,
+        },
+      });
+
       this.getMusicMess();
     },
 
@@ -234,13 +279,24 @@ export default {
       this.isPlay = false;
       this.tdValue = 0;
 
-      this.$router.push({
+      this.$router.replace({
         path: "/player",
         query: {
           id: mid,
         },
       });
 
+      this.getMusicMess();
+    },
+
+    // 点击列表切歌
+    handleCommand(command) {
+      this.$router.replace({
+        path: "/player",
+        query: {
+          id: command,
+        },
+      });
       this.getMusicMess();
     },
   },
@@ -357,6 +413,9 @@ export default {
 }
 
 .lieOut {
+  height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
   li {
     width: 200px;
     overflow: hidden;

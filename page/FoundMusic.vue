@@ -38,7 +38,7 @@
         class="playlistItem"
         v-for="item in newMusicMess"
         :key="item.id"
-        @click="toPlayer(item.id)"
+        @click="toPlayer(newMusicMess,item.id)"
       >
         <img v-lazy="item.picUrl" alt="" :key="item.picUrl" />
         <div class="playlistName">{{ item.name }}</div>
@@ -51,7 +51,7 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="recommendPlaylist" style="margin-bottom: 20px">
-      <div class="playlistItem" v-for="item in recommendSongs" :key="item.id">
+      <div class="playlistItem" v-for="item in recommendSongs" :key="item.id" @click="toPlayer(recommendSongs,item.id)">
         <img v-lazy="item.al.picUrl" alt="" :key="item.id" />
         <div class="playlistName">{{ item.name }}</div>
       </div>
@@ -111,10 +111,10 @@ export default {
     },
 
     // 跳转播放器界面
-    toPlayer(mid) {
+    toPlayer(obj,mid) {
       let musicIds = [];
-      for (let i = 0; i < this.newMusicMess.length; i++) {
-        musicIds.push(this.newMusicMess[i].id);
+      for (let i = 0; i < obj.length; i++) {
+        musicIds.push(obj[i].id);
       }
 
       // 将音乐列表本地存储

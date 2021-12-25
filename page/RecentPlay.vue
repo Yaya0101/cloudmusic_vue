@@ -10,6 +10,7 @@
           class="listPageItem"
           v-for="item in recentMess"
           :key="item.song.id"
+          @click="toPlayer(recentMess, item.song.id)"
         >
           <img
             v-lazy="item.song.al.picUrl"
@@ -42,6 +43,23 @@ export default {
         type: 1,
       });
       this.recentMess = recentMess.weekData;
+    },
+    // 跳转播放器界面
+    toPlayer(obj, mid) {
+      let musicIds = [];
+      for (let i = 0; i < obj.length; i++) {
+        musicIds.push(obj[i].song.id);
+      }
+
+      // 将音乐列表本地存储
+      localStorage.setItem("musicIds", JSON.stringify(musicIds));
+
+      this.$router.push({
+        path: "/player",
+        query: {
+          id: mid,
+        },
+      });
     },
   },
   mounted() {
