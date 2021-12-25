@@ -34,7 +34,12 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="recommendPlaylist">
-      <div class="playlistItem" v-for="item in newMusicMess" :key="item.id">
+      <div
+        class="playlistItem"
+        v-for="item in newMusicMess"
+        :key="item.id"
+        @click="toPlayer(item.id)"
+      >
         <img v-lazy="item.picUrl" alt="" :key="item.picUrl" />
         <div class="playlistName">{{ item.name }}</div>
       </div>
@@ -98,9 +103,27 @@ export default {
     // 跳转歌单界面
     toPlayListPage(mid) {
       this.$router.push({
-        path:'/songListPage',
+        path: "/songListPage",
         query: {
-          id: mid
+          id: mid,
+        },
+      });
+    },
+
+    // 跳转播放器界面
+    toPlayer(mid) {
+      let musicIds = [];
+      for (let i = 0; i < this.newMusicMess.length; i++) {
+        musicIds.push(this.newMusicMess[i].id);
+      }
+
+      // 将音乐列表本地存储
+      localStorage.setItem('musicIds',JSON.stringify(musicIds))
+
+      this.$router.push({
+        path: "/player",
+        query: {
+          id: mid,
         },
       });
     },

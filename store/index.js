@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const actions = {}
 //准备mutations对象——修改state中的数据
 const mutations = {
-	//执行加
+	//登录验证
 	getUserMess(state) {
 		// console.log('mutations中的JIA被调用了',state,value)
 		function getCookie(cname) {
@@ -27,7 +27,7 @@ const mutations = {
 			state.userName = JSON.parse(localStorage.getItem("userMess")).nickname
 			state.userHeadPortraits = JSON.parse(localStorage.getItem("userMess")).avatarUrl
 			state.isLogin = true
-			state.cookie = "MUSIC_U="+getCookie("MUSIC_U")
+			state.cookie = "MUSIC_U=" + getCookie("MUSIC_U")
 		} else {
 			state.userId = 0
 			state.userName = ''
@@ -36,7 +36,7 @@ const mutations = {
 			state.cookie = ''
 		}
 
-	}
+	},
 }
 //准备state对象——保存具体的数据
 const state = {
@@ -44,7 +44,7 @@ const state = {
 	userName: '',
 	userHeadPortraits: '',
 	isLogin: false,
-	cookie:''
+	cookie: '',
 }
 
 //创建并暴露store

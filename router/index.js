@@ -40,6 +40,10 @@ const router = new VueRouter({
 		{
 			path: '/songListPage',
 			component: resolve=>(require(["../page/SongListPage.vue"],resolve))
+		},
+		{
+			path: '/player',
+			component: resolve=>(require(["../page/Player.vue"],resolve))
 		}
 	]
 })

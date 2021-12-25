@@ -9,11 +9,11 @@
         userMess.isLogin ? userMess.userName : "请登录"
       }}</span>
     </div>
-    <div class="chooser" @click="toLogin(2)">发现音乐</div>
-    <div class="chooser" @click="toLogin(3)">排行榜</div>
-    <div class="chooser" @click="toLogin(4)">最近播放</div>
-    <div class="chooser" @click="toLogin(5)">我喜欢的音乐</div>
-    <div class="chooser" @click="toLogin(6)">收藏的歌单</div>
+    <div class="el-icon-search chooser" @click="toLogin(2)">发现音乐</div>
+    <div class="el-icon-trophy chooser" @click="toLogin(3)">排行榜</div>
+    <div class="el-icon-timer chooser" @click="toLogin(4)">最近播放</div>
+    <div class="el-icon-headset chooser" @click="toLogin(5)">我喜欢的音乐</div>
+    <div class="el-icon-star-off chooser" @click="toLogin(6)">收藏的歌单</div>
   </div>
 </template>
 

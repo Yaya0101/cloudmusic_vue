@@ -1,6 +1,11 @@
 <template>
-    <div class="musicPageWrap">
-      <div class="listPage">
+  <div class="musicPageWrap">
+    <div class="listPage">
+      <transition-group
+        name="animate__animated animate__bounce"
+        enter-active-class="animate__fadeInRight"
+        leave-active-class="animate__fadeOutRight"
+      >
         <div class="listPageItem" v-for="item in playListMusic" :key="item.id">
           <img
             v-lazy="item.al.picUrl"
@@ -12,8 +17,9 @@
             <div class="listItemUpdate">{{ item.ar[0].name }}</div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
+  </div>
 </template>
 
 <script>
@@ -50,13 +56,17 @@ export default {
     .listPageItem {
       display: flex;
       align-items: center;
-      background-color: #faecd8;
+      background-color: white;
       height: 200px;
       margin-top: 20px;
       margin-left: 20px;
       margin-right: 20px;
       border-radius: 20px;
       cursor: pointer;
+      box-shadow: 0 0.4px 3.6px rgba(0, 0, 0, 0.004),
+        0 1px 8.5px rgba(0, 0, 0, 0.01), 0 1.9px 15.7px rgba(0, 0, 0, 0.019),
+        0 3.4px 28.2px rgba(0, 0, 0, 0.03), 0 6.3px 54.4px rgba(0, 0, 0, 0.047),
+        0 15px 137px rgba(0, 0, 0, 0.07);
       img {
         height: 150px;
         width: 150px;

@@ -20,6 +20,8 @@ export default {
 <style lang="less" scoped>
 .indexWrap {
     height: 100%;
+    min-width: 1536px;
+    min-height: 721px;
 
     .leftWrap{
       border-right: 1px solid #808080;
