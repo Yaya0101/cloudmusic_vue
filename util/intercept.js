@@ -6,10 +6,11 @@ import router from "../router/index";
 export default () => {
     //请求拦截
     axios.interceptors.request.use(config => {
+        store.commit('getUserMess')
         // Do something before request is sent
-        // if(store.state.cookie){
-        //     console.log(store.state.cookie)
-        // }
+        if(store.state.cookie){
+            config.params.cookie = store.state.cookie
+        }
         return config;
     }, error => {
         // Do something with request error

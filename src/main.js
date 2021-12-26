@@ -39,3 +39,30 @@ new Vue({
   router,
   store
 }).$mount('#app')
+
+// 路由守卫
+//全局前置守卫：初始化时执行、每次路由切换前执行
+router.beforeEach((to, from, next) => {
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+  }
+
+  if (localStorage.getItem("userMess") && localStorage.getItem("token") && getCookie("MUSIC_U") != "") {
+    next() //放行
+  } else {
+    if (to.meta.loginP) {
+      next() //放行
+    } else {
+      alert("登录过期,请重新登录")
+      router.replace({
+        path: '/login'
+      })
+    }
+  }
+})

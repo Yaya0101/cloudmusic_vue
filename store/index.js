@@ -27,7 +27,7 @@ const mutations = {
 			state.userName = JSON.parse(localStorage.getItem("userMess")).nickname
 			state.userHeadPortraits = JSON.parse(localStorage.getItem("userMess")).avatarUrl
 			state.isLogin = true
-			state.cookie = "MUSIC_U=" + getCookie("MUSIC_U")
+			state.cookie = "MUSIC_U=" + getCookie("MUSIC_U")+";"
 		} else {
 			state.userId = 0
 			state.userName = ''

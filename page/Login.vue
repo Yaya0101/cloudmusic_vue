@@ -81,19 +81,19 @@ export default {
         this.$notify({
           title: "提示",
           message: "登陆成功",
-          type: 'success'
+          type: "success",
         });
       } else if (res.code === 502) {
         this.$notify({
           title: "提示",
           message: "密码错误",
-          type: 'warning'
+          type: "warning",
         });
       } else if (res.code === 400) {
         this.$notify({
           title: "提示",
           message: "手机号错误",
-          type: 'warning'
+          type: "warning",
         });
       } else {
         this.$notify.error({
@@ -124,6 +124,9 @@ export default {
             new Date(0).toUTCString(); // 清除一级域名下的或指定的，例如 .ratingdog.cn
         }
       }
+
+      this.$store.commit("getUserMess");
+
       this.$router.replace({
         path: "/foundMusic",
       });
@@ -144,6 +147,10 @@ export default {
 
       return userMess;
     },
+  },
+
+  mounted() {
+    this.$store.commit("getUserMess");
   },
 };
 </script>

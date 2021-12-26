@@ -18,8 +18,8 @@
             :key="item.song.al.picUrl"
           />
           <div class="listMess">
-            <div class="listItemName">{{ item.song.ar[0].name }}</div>
-            <div class="listItemUpdate">{{ item.song.alia[0] }}</div>
+            <div class="listItemName">{{ item.song.name }}</div>
+            <div class="listItemUpdate">{{ item.song.ar[0].name }}</div>
           </div>
         </div>
       </transition-group>
@@ -36,13 +36,12 @@ export default {
     };
   },
   methods: {
-    // 获取排行榜数据
+    // 获取最近播放数据
     async getRecentPlay() {
       let recentMess = await myAxios("/user/record", {
-        uid: this.$store.state.userId,
-        type: 1,
+        uid: this.$store.state.userId
       });
-      this.recentMess = recentMess.weekData;
+      this.recentMess = recentMess.allData;
     },
     // 跳转播放器界面
     toPlayer(obj, mid) {

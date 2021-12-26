@@ -15,7 +15,10 @@ const router = new VueRouter({
 		},
 		{
 			path: '/login',
-			component: resolve=>(require(["../page/Login.vue"],resolve))
+			component: resolve=>(require(["../page/Login.vue"],resolve)),
+			meta:{
+				loginP:true
+			}
 		},
 		{
 			path: '/foundMusic',

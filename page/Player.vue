@@ -149,6 +149,7 @@ export default {
       }
       this.allTime = fen + ":" + miao;
 
+      this.tdValue = 0;
       bfq.play();
       this.isPlay = true;
     },
@@ -253,7 +254,6 @@ export default {
       bfq.currentTime = 0
       bfq.pause()
       this.isPlay = false;
-      this.tdValue = 0;
 
       this.$router.replace({
         path: "/player",
@@ -277,7 +277,6 @@ export default {
       let bfq = this.$refs.bfq;
       bfq.load();
       this.isPlay = false;
-      this.tdValue = 0;
 
       this.$router.replace({
         path: "/player",
@@ -303,6 +302,7 @@ export default {
   mounted() {
     this.getMusicMess();
     this.showList();
+
   },
 };
 </script>

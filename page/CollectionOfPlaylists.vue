@@ -43,7 +43,7 @@ export default {
       });
       let xCollectionMess = [];
       for (let i = 0; i < collectionMess.playlist.length; i++) {
-        if (collectionMess.playlist[i].subscribed) {
+        if (collectionMess.playlist[i].creator.nickname != this.$store.state.userName) {
           xCollectionMess.push(collectionMess.playlist[i]);
         }
       }
