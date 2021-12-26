@@ -47,6 +47,10 @@ const router = new VueRouter({
 		{
 			path: '/player',
 			component: resolve=>(require(["../page/Player.vue"],resolve))
+		},
+		{
+			path: '/search',
+			component: resolve=>(require(["../page/Search.vue"],resolve))
 		}
 	]
 })

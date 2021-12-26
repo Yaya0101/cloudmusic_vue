@@ -1,5 +1,17 @@
 <template>
   <div class="foundMusicWrap">
+    <div class="searchWrap">
+      <!-- 搜索框 -->
+      <el-input
+        placeholder="输入搜索内容"
+        prefix-icon="el-icon-search"
+        class="searchPut"
+        clearable
+        v-model="searchV"
+        @keypress.native.enter="toSearchPage"
+      >
+      </el-input>
+    </div>
     <!-- 轮播图 -->
     <el-carousel :interval="5000" class="bannerWrap">
       <el-carousel-item
@@ -38,7 +50,7 @@
         class="playlistItem"
         v-for="item in newMusicMess"
         :key="item.id"
-        @click="toPlayer(newMusicMess,item.id)"
+        @click="toPlayer(newMusicMess, item.id)"
       >
         <img v-lazy="item.picUrl" alt="" :key="item.picUrl" />
         <div class="playlistName">{{ item.name }}</div>
@@ -51,7 +63,12 @@
       <i class="el-icon-arrow-right"></i>
     </div>
     <div class="recommendPlaylist" style="margin-bottom: 20px">
-      <div class="playlistItem" v-for="item in recommendSongs" :key="item.id" @click="toPlayer(recommendSongs,item.id)">
+      <div
+        class="playlistItem"
+        v-for="item in recommendSongs"
+        :key="item.id"
+        @click="toPlayer(recommendSongs, item.id)"
+      >
         <img v-lazy="item.al.picUrl" alt="" :key="item.id" />
         <div class="playlistName">{{ item.name }}</div>
       </div>
@@ -68,6 +85,7 @@ export default {
       playlistMess: [],
       newMusicMess: [],
       recommendSongs: [],
+      searchV: "",
     };
   },
 
@@ -111,19 +129,33 @@ export default {
     },
 
     // 跳转播放器界面
-    toPlayer(obj,mid) {
+    toPlayer(obj, mid) {
       let musicIds = [];
       for (let i = 0; i < obj.length; i++) {
         musicIds.push(obj[i].id);
       }
 
       // 将音乐列表本地存储
-      localStorage.setItem('musicIds',JSON.stringify(musicIds))
+      localStorage.setItem("musicIds", JSON.stringify(musicIds));
 
       this.$router.push({
         path: "/player",
         query: {
           id: mid,
+        },
+      });
+    },
+
+    // 跳转搜索界面
+    async toSearchPage() {
+      if (this.searchV === "") {
+        return;
+      }
+
+      this.$router.push({
+        path: "/search",
+        query: {
+          searchName: this.searchV,
         },
       });
     },
@@ -138,6 +170,17 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+// 搜索样式
+.searchWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .searchPut {
+    width: 80%;
+    margin: 10px auto;
+  }
+}
+
 // 轮播图样式
 .bannerWrap {
   .bannerItem {
